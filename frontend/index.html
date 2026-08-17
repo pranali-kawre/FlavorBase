@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FlavorBase — Discover & Share Recipes</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+    <header class="site-header">
+        <div class="logo">FlavorBase</div>
+        <nav class="main-nav">
+            <a href="index.html">Home</a>
+            <a href="add-recipe.html">Add Recipe</a>
+            <a href="favorites.html">Favorites</a>
+            <a href="login.html" id="login-link">Login</a>
+            <a href="register.html" id="register-link">Register</a>
+            <button id="logout-btn" style="display:none;">Logout</button>
+        </nav>
+    </header>
+
+    <main>
+        <section class="search-bar">
+            <input type="text" id="search-input" placeholder="Search recipes...">
+            <select id="category-filter">
+                <option value="">All Categories</option>
+                <option value="Breakfast">Breakfast</option>
+                <option value="Lunch">Lunch</option>
+                <option value="Dinner">Dinner</option>
+                <option value="Dessert">Dessert</option>
+                <option value="Beverage">Beverage</option>
+            </select>
+        </section>
+
+        <section class="recipe-grid" id="recipe-grid">
+            <!-- Recipe cards will be inserted here by JavaScript -->
+            <p class="loading-text">Loading recipes...</p>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <p>&copy; 2026 FlavorBase. Built while learning full-stack development.</p>
+    </footer>
+
+    <script src="js/api.js"></script>
+    <script src="js/recipes.js"></script>
+</body>
+
+</html>
