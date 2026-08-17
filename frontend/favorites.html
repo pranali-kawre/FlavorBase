@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Favorites — FlavorBase</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="logo">FlavorBase</div>
+    <nav class="main-nav">
+      <a href="index.html">Home</a>
+      <a href="add-recipe.html">Add Recipe</a>
+      <button id="logout-btn">Logout</button>
+    </nav>
+  </header>
+
+  <main>
+    <h1 class="page-title">My Favorite Recipes</h1>
+
+    <section class="recipe-grid" id="favorites-grid">
+      <p class="loading-text">Loading your favorites...</p>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>&copy; 2026 FlavorBase. Built while learning full-stack development.</p>
+  </footer>
+
+  <script src="js/api.js"></script>
+  <script src="js/favorites.js"></script>
+</body>
+</html>
