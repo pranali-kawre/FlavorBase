@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Add Recipe — FlavorBase</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="logo">FlavorBase</div>
+    <nav class="main-nav">
+      <a href="index.html">Home</a>
+      <a href="favorites.html">Favorites</a>
+      <button id="logout-btn">Logout</button>
+    </nav>
+  </header>
+
+  <main class="form-page">
+    <form id="add-recipe-form" class="recipe-form">
+      <h1>Add a New Recipe</h1>
+
+      <p class="error-message" id="recipe-error"></p>
+
+      <label for="title">Title</label>
+      <input type="text" id="title" name="title" required>
+
+      <label for="description">Description</label>
+      <textarea id="description" name="description" rows="2"></textarea>
+
+      <label for="ingredients">Ingredients</label>
+      <textarea id="ingredients" name="ingredients" rows="4" required placeholder="One ingredient per line, e.g.&#10;2 cups flour&#10;1 tsp salt"></textarea>
+
+      <label for="steps">Steps</label>
+      <textarea id="steps" name="steps" rows="6" required placeholder="1. Preheat oven...&#10;2. Mix dry ingredients..."></textarea>
+
+      <label for="imageUrl">Image URL (optional)</label>
+      <input type="url" id="imageUrl" name="imageUrl" placeholder="https://example.com/image.jpg">
+
+      <label for="category">Category</label>
+      <select id="category" name="category">
+        <option value="Breakfast">Breakfast</option>
+        <option value="Lunch">Lunch</option>
+        <option value="Dinner">Dinner</option>
+        <option value="Dessert">Dessert</option>
+        <option value="Beverage">Beverage</option>
+      </select>
+
+      <button type="submit">Publish Recipe</button>
+    </form>
+  </main>
+
+  <footer class="site-footer">
+    <p>&copy; 2026 FlavorBase. Built while learning full-stack development.</p>
+  </footer>
+
+  <script src="js/api.js"></script>
+  <script src="js/recipes.js"></script>
+</body>
+</html>
