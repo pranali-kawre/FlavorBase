@@ -7,6 +7,11 @@ const favoriteRoutes = require('./routes/favoriteRoutes');
 
 const app = express();
 
+const path = require('path');
+
+// Serve static files from your frontend folder
+app.use(express.static(path.join(__dirname, '../frontend')));
+
 app.use(cors());
 app.use(express.json());
 
