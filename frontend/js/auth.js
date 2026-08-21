@@ -38,6 +38,7 @@ if (loginForm) {
         try {
             const data = await loginUser(email, password);
             setToken(data.token); // save the JWT
+            setUsername(data.username); // save the username
             window.location.href = 'index.html'; // send them home
         } catch (err) {
             errorEl.textContent = err.message;
@@ -52,10 +53,20 @@ function updateNavForAuth() {
     const loginLink = document.getElementById('login-link');
     const registerLink = document.getElementById('register-link');
     const logoutBtn = document.getElementById('logout-btn');
+    const userDisplay = document.getElementById("user-display");
 
     if (loginLink) loginLink.style.display = isLoggedIn ? 'none' : 'inline';
     if (registerLink) registerLink.style.display = isLoggedIn ? 'none' : 'inline';
     if (logoutBtn) logoutBtn.style.display = isLoggedIn ? 'inline-block' : 'none';
+
+    if(userDisplay) {
+        if (isLoggedIn) {
+            userDisplay.textContent = `👤 ${getUsername()}`;
+            userDisplay.style.display = 'inline';
+        } else {
+            userDisplay.style.display = "none";
+        }
+    }
 }
 
 // ---------- Handle Logout ----------

@@ -11,8 +11,19 @@ function setToken(token) {
 }
 
 // Remove the token (logout)
-function clearToken() {
+function getUsername() {
+  return localStorage.getItem('username');
+}
+
+//Save the username after login
+function setUsername(username) {
+  localStorage.setItem('username', username);
+}
+
+//Remove the token and username (logout)
+function clearToken(){
   localStorage.removeItem('token');
+  localStorage.removeItem('username');
 }
 
 // A generic wrapper around fetch() for all our API calls

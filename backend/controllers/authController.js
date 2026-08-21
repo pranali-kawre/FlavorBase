@@ -59,7 +59,7 @@ async function login(req, res) {
             { expiresIn: '7d' }
         );
 
-        res.json({ message: 'Login successful', token });
+        res.json({ message: 'Login successful', token , username: user.username});
     } catch (err) {
         console.error(err);
         res.status(500).json({ error: 'Something went wrong during login' });
