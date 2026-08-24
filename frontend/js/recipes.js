@@ -68,3 +68,37 @@ if (searchInput && categoryFilter) {
   searchInput.addEventListener('input', applyFilters);
   categoryFilter.addEventListener('change', applyFilters);
 }
+
+// ---------- Handle Add Recipe Form ----------
+const addRecipeForm = document.getElementById('add-recipe-form');
+
+if (addRecipeForm) {
+  addRecipeForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    const errorEl = document.getElementById('recipe-error');
+    errorEl.textContent = '';
+
+    if (!getToken()) {
+      errorEl.textContent = 'You must be logged in to add a recipe.';
+      return;
+    }
+
+    const recipeData = {
+      title: document.getElementById('title').value,
+      description: document.getElementById('description').value,
+      ingredients: document.getElementById('ingredients').value,
+      steps: document.getElementById('steps').value,
+      imageUrl: document.getElementById('imageUrl').value,
+      category: document.getElementById('category').value
+    };
+
+    try {
+      const result = await createRecipe(recipeData);
+      // Redirect to the new recipe's detail page
+      window.location.href = `recipe-details.html?id=${result.recipeId}`;
+    } catch (err) {
+      errorEl.textContent = err.message;
+    }
+  });
+}
