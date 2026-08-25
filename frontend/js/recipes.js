@@ -85,10 +85,38 @@ if (searchInput && categoryFilter) {
   categoryFilter.addEventListener('change', applyFilters);
 }
 
-// ---------- Handle Add Recipe Form ----------
+// ---------- Handle Add/Edit Recipe Form ----------
 const addRecipeForm = document.getElementById('add-recipe-form');
 
 if (addRecipeForm) {
+  const urlParams = new URLSearchParams(window.location.search);
+  const editId = urlParams.get('editId');
+
+  // If editId is present, we're editing — pre-fill the form with existing data
+  if (editId) {
+    const formTitle = document.getElementById('form-title');
+    const submitBtn = document.getElementById('submit-btn');
+
+    formTitle.textContent = 'Edit Recipe';
+    submitBtn.textContent = 'Save Changes';
+
+    (async () => {
+      try {
+        const recipe = await getRecipeById(editId);
+
+        document.getElementById('title').value = recipe.title;
+        document.getElementById('description').value = recipe.description || '';
+        document.getElementById('ingredients').value = recipe.ingredients;
+        document.getElementById('steps').value = recipe.steps;
+        document.getElementById('imageUrl').value = recipe.image_url || '';
+        document.getElementById('category').value = recipe.category || 'Breakfast';
+      } catch (err) {
+        document.getElementById('recipe-error').textContent =
+          'Failed to load recipe for editing: ' + err.message;
+      }
+    })();
+  }
+
   addRecipeForm.addEventListener('submit', async (e) => {
     e.preventDefault();
 
@@ -110,9 +138,13 @@ if (addRecipeForm) {
     };
 
     try {
-      const result = await createRecipe(recipeData);
-      // Redirect to the new recipe's detail page
-      window.location.href = `recipe-details.html?id=${result.recipeId}`;
+      if (editId) {
+        await updateRecipe(editId, recipeData);
+        window.location.href = `recipe-details.html?id=${editId}`;
+      } else {
+        const result = await createRecipe(recipeData);
+        window.location.href = `recipe-details.html?id=${result.recipeId}`;
+      }
     } catch (err) {
       errorEl.textContent = err.message;
     }
