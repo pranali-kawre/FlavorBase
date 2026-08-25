@@ -94,3 +94,14 @@ function addFavorite(recipeId) {
 function removeFavorite(recipeId) {
   return apiRequest(`/favorites/${recipeId}`, 'DELETE', null, true);
 }
+
+// Get a Set of recipe IDs the current user has favorited (empty if not logged in)
+async function getFavoritedRecipeIds() {
+  if (!getToken()) return new Set();
+  try {
+    const favorites = await getFavorites();
+    return new Set(favorites.map(fav => fav.id));
+  } catch (err) {
+    return new Set();
+  }
+}

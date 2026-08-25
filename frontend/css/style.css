@@ -256,10 +256,30 @@ main {
   border-radius: 50%;
   width: 32px;
   height: 32px;
-  font-size: 1rem;
+  font-size: 1.1rem;
+  color: var(--color-text-muted);
+  transition: color 0.2s ease, transform 0.2s ease;
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.recipe-card-fav:hover {
+  transform: scale(1.1);
+}
+
+.recipe-card-fav.active {
+  color: var(--color-accent);
+}
+
+.recipe-card-link {
+  display: block;
+  color: inherit;
+  text-decoration: none;
+}
+
+.recipe-card-link:hover {
+  text-decoration: none;
 }
 
 /* ---------- Forms (auth + recipe) ---------- */

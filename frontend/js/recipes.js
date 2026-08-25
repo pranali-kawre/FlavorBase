@@ -1,12 +1,17 @@
 // ---------- Render recipe cards into a container ----------
-function renderRecipeCards(recipes, containerEl) {
+function renderRecipeCards(recipes, containerEl, favoritedIds = new Set()) {
   if (recipes.length === 0) {
     containerEl.innerHTML = '<p class="loading-text">No recipes found.</p>';
     return;
   }
 
-  containerEl.innerHTML = recipes.map(recipe => `
-    <div class="recipe-card" onclick="window.location.href='recipe-details.html?id=${recipe.id}'">
+  const isLoggedIn = !!getToken();
+
+  containerEl.innerHTML = recipes.map(recipe => {
+    const isFav = favoritedIds.has(recipe.id);
+    return `
+    <div class="recipe-card" >
+    <a class="recipe-card-link" href="recipe-details.html?id=${recipe.id}">
       <img
         class="recipe-card-image"
         src="${recipe.image_url || 'https://placehold.co/400x300?text=No+Image'}"
@@ -18,8 +23,16 @@ function renderRecipeCards(recipes, containerEl) {
         <p class="recipe-card-desc">${recipe.description || ''}</p>
         <span class="recipe-card-meta">By ${recipe.author}</span>
       </div>
+      </a>
+      <button
+      class="recipe-card-fav ${isFav ? 'active' : ''}"
+      data-recipe-id="${recipe.id}"
+      style="${isLoggedIn ? '' : 'display: none;'}"
+      title="${isFav ? 'Remove from favorites' : 'Add to favorites'}"
+      >${isFav ? '❤️' : '🤍'}</button>
     </div>
-  `).join('');
+    `;
+  }).join('');
 }
 
 // ---------- Load and display all recipes on the homepage ----------
@@ -29,7 +42,8 @@ if (recipeGrid) {
   (async () => {
     try {
       const recipes = await getRecipes();
-      renderRecipeCards(recipes, recipeGrid);
+      const favoritedIds = await getFavoritedRecipeIds();
+      renderRecipeCards(recipes, recipeGrid, favoritedIds);
     } catch (err) {
       recipeGrid.innerHTML = `<p class="loading-text">Failed to load recipes: ${err.message}</p>`;
     }
@@ -42,11 +56,13 @@ const categoryFilter = document.getElementById('category-filter');
 
 if (searchInput && categoryFilter) {
   let allRecipes = [];
+  let favoritedIds = new Set();
 
   // Store all recipes once fetched, so filtering doesn't need new API calls
   (async () => {
     try {
       allRecipes = await getRecipes();
+      favoritedIds = await getFavoritedRecipeIds();
     } catch (err) {
       console.error('Failed to load recipes for filtering:', err);
     }
@@ -62,7 +78,7 @@ if (searchInput && categoryFilter) {
       return matchesSearch && matchesCategory;
     });
 
-    renderRecipeCards(filtered, recipeGrid);
+    renderRecipeCards(filtered, recipeGrid, favoritedIds);
   }
 
   searchInput.addEventListener('input', applyFilters);
